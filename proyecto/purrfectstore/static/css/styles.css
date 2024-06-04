@@ -1,0 +1,113 @@
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.titulo-h3 h3{
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    
+}
+h2{
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+h3{
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+h4{
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.precio{
+    text-align: center;
+}
+p{
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: gray;
+
+}
+
+.navbar-brand {
+  
+    padding: 20px;
+    
+  
+}
+.container{
+    padding:  100px;
+}
+
+.textos .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.textos .col-sm-2 {
+    flex: 0 0 25%; /* Tamaño inicial del contenedor: 25% del ancho del padre */
+    max-width: 25%; /* Tamaño máximo del contenedor: 25% del ancho del padre */
+    min-width: 200px; /* Tamaño mínimo del contenedor */
+    
+}
+
+@media (max-width: 992px) {
+    .textos .col-sm-2 {
+        flex-basis: 50%; /* Cuando se alcanza el punto de quiebre, cambia el tamaño base al 50% */
+        max-width: 50%; /* Tamaño máximo del contenedor: 50% del ancho del padre */
+    }
+}
+
+.imagenes{
+    padding: 50px 50px;
+}
+
+.imagenes h2{
+    text-transform: uppercase;
+    font-size: 25px;
+}
+
+.texto2{
+    padding: 100px;
+    text-align: justify;
+}
+
+
+.card-hover {
+    transition: box-shadow 0.3s; /* Añade una transición suave para el efecto */
+  }
+  
+.card-hover:hover {
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Añade una sombra al pasar el mouse sobre la tarjeta */
+}
+
+#mensajeCorreo, #mensajeNombre, #mensajeMensaje, #mensajeTelefono {
+    color: red;
+}
+
+#imagenes-nosotros img{
+    width: 100%;
+    height: auto;
+}
+
+gmp-map {
+    height: 90%;
+  }
+  
+  /* Optional: Makes the sample page fill the window. */
+  html,
+  body {
+    height: 90%;
+    margin: 0;
+    padding: 0;
+  }
