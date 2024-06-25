@@ -19,7 +19,7 @@
          <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href={% url 'home' %}>
-                    <img src="../static\img\logo.jpg" alt="Logo" width="50" height="50" class="d-inline-block align-text-center" style="border-radius: 50%;" > <!--border radius hace que el ícono sea un círculo-->
+                    <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="50" height="50" class="d-inline-block align-text-center" style="border-radius: 50%;" > <!--border radius hace que el ícono sea un círculo-->
                     PurrfectStore
                   </a>
               
@@ -52,12 +52,26 @@
                   <li class="nav-item d-flex align-items-center m-0"> 
                     <div class="user-items m-0">
                       <ul class="d-flex justify-content-end list-unstyled m-0 ">
-                        <li class="pe-3">
-                          <a href="index.html"><img src="../static\img\usuario.png" alt="Mi-cuenta" width="20" height="20"></a>
+                        
+                        
+                        {% if user.is_authenticated %}
+                        <li>
+                          <a href={% url 'micuenta' %}><img src="{% static 'img/usuario.png' %}" alt="Mi-cuenta" width="20" height="20"></a>
                         </li>
+                          <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-link" type="submit">Logout</button>
+                          </form>
+                          </li>
+                        {% else %}
+                          <li class="pe-3">
+                            <a href={% url 'login' %}><img src="{% static 'img/usuario.png' %}" alt="Mi-cuenta" width="20" height="20"></a>
+                          </li>
+                        {% endif %}
                         <li>
                           <a href={% url 'carrito' %}>
-                            <img src="../static\img\carrito.png" alt="Carrito" width="20" height="20"><span id="items-carrito" class="badge rounded-pill text-bg-danger">0</span>
+                            <img src="{% static 'img/carrito.png' %}" alt="Carrito" width="20" height="20"><span id="items-carrito" class="badge rounded-pill text-bg-danger">0</span>
                           </a>
                         </li>
 
