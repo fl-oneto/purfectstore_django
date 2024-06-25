@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib import messages
+from .models import Producto, Categoria
 
 
 # Create your views here
@@ -56,3 +57,8 @@ def custom_login(request):
         form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
 
+def productosAseo(request):
+    categoria_aseo = get_object_or_404(Categoria, nombre='Aseo e Higiene')
+    productos = Producto.objects.filter(categoria=categoria_aseo, disponible=True)
+    print(productos)
+    return render(request, 'productosAseo.html', {'productos': productos, 'categoria': categoria_aseo})
