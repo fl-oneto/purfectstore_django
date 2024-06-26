@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
+
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label='Usuario', required=True,
                                 max_length=50, min_length=5,
@@ -53,3 +54,23 @@ class SignUpForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    
+class FormularioContacto(forms.Form):
+    email = forms.EmailField(label="Email", max_length=100,min_length=5, required=True,
+                            widget=forms.TextInput(attrs={'placeholder': 'Ingrese su Email', 'class': 'form-control'}),
+                            error_messages={'required':'El Email es obligatorio', 'max_length':'el email no puede tener más de 100 caracteres','min_length': 'El email debe tener al menos 5 caracteres'})
+    nombre = forms.CharField(label="Nombre", max_length=50, required=True,
+                            widget=forms.TextInput(attrs={'placeholder': 'Ingrese su Nombre', 'class': 'form-control'}),
+                            error_messages={'required':'El nombre es obligatorio', 'max_length': 'el nombre no puede tener más de 50 caracteres'})
+    
+    telefono = forms.CharField(label='Teléfono', max_length=9, min_length=9, required=True,
+                            widget=forms.TextInput(attrs={'placeholder': 'Ingrese su Teléfono', 'class': 'form-control'}),
+                            error_messages={'required':'El Teléfono es obligatorio', 'max_length': 'El número de teléfono debe tener 9 digitos', 'min_length': 'El número de teléfono debe tener 9 digitos'})
+    mensaje = forms.CharField(label ='Mensaje', max_length=1000, required = True,
+                            widget=forms.Textarea(attrs={'placeholder':'Ingrese su mensaje', 'class':'form-control'}),
+                            error_messages= {'required':'El mensaje es obligatorio', 'max_length':'El maximo de caracteres es de 1000'})
+    def clean_telefono(self):
+        telefono = self.cleaned_data['telefono']
+        if not telefono.isdigit():
+            raise forms.ValidationError('El número de teléfono debe contener solo dígitos.')
+        return telefono

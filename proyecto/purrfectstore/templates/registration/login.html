@@ -15,20 +15,22 @@
             <div class="col-lg-6">
                 <h2 class="mb-4">Iniciar Sesión</h2>
                 
-                <form method="post">
+                <form method="post" action="."  novalidate>
                     {% csrf_token %}
                     {{ form.as_p }}
                     
                     <button class="btn btn-primary mt-3" type="submit">Login</button>
                 </form>
-                
-                {% if messages %}
-                    <ul class="messages mt-3">
-                        {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% comment %} {% if form.errors %}
+                    <ul>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
-                {% endif %}
+                {% endif %}             {% endcomment %}
+
                 <br>
                  ¿Aún no tienes una cuenta? <a href={% url 'signup' %}>Crea una aquí</a>
             </div>

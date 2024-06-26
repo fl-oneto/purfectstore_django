@@ -8,9 +8,10 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('home/', views.home, name='home'),
-    path('login/', auth_views.LoginView.as_view(authentication_form=CustomAuthenticationForm), name='login'),
+     path('custom_login/', views.custom_login, name='custom_login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('signup/', views.signup, name='signup'),
-    path('', include('django.contrib.auth.urls')),
-    path('productosAseo/', views.productosAseo, name='productosAseo')
+    path('purrfectstore/', include('django.contrib.auth.urls')),
+    path('productosAseo/', views.productosAseo, name='productosAseo'),
+     path('contacto/', views.contacto, name='contacto')
 ]
