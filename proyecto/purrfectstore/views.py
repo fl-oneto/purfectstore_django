@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -5,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required # Decorador para el login
 from .forms import SignUpForm, FormularioContacto, CustomAuthenticationForm, UserProfileForm
 from .models import Producto, Categoria, UserProfile
+import requests
 
 
 
@@ -177,3 +179,13 @@ def editar_perfil(request):
         })
 
     return render(request, 'micuenta.html', {'form': form})
+
+def obt_img_gato(request):
+    if 'cat_images' in request.session:
+        cat_images = request.session['cat_images']
+    else:
+        response = requests.get("https://api.thecatapi.com/v1/images/search?limit=3")
+        data = response.json()
+        request.session['cat_images'] = data
+        cat_images = data
+    return JsonResponse(cat_images, safe=False)
