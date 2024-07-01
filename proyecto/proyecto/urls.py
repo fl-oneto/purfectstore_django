@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from purrfectstore.views import home, contacto, nosotros, productosAseo, micuenta, ver_carrito
+from purrfectstore.views import home, contacto, nosotros, productosAseo, ver_carrito, micuenta
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -24,11 +24,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
     path('purrfectstore/', include('purrfectstore.urls')),
-    path('carrito/',ver_carrito, name="carrito"),
+    path('carrito/', ver_carrito, name="carrito"),
     path('contacto/', contacto, name="contacto"),
-    path('nosotros/', nosotros, name="nosotros"),
-    path('productosAseo/', productosAseo,name="productosAseo"),
-    path('micuenta/', micuenta, name="micuenta"),
+    path('nosotros/', nosotros, name="nosotros"), 
+    path('productosAseo/', productosAseo, name="productosAseo"),
+    path('micuenta/', micuenta, name="micuenta"),  # NMO RETIRAR PLSPLS, esencial para el deploy 
 ]
 
 if settings.DEBUG:

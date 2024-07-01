@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
-from .forms import SignUpForm, FormularioContacto, CustomAuthenticationForm
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Producto, Categoria
+from django.contrib.auth.decorators import login_required # Decorador para el login
+from .forms import SignUpForm, FormularioContacto, CustomAuthenticationForm, UserProfileForm
+from .models import Producto, Categoria, UserProfile
 
 
 
@@ -80,16 +82,98 @@ def agregar_al_carrito(request, producto_id):
     request.session.modified = True  
     return redirect('productosAseo')
 
+@login_required
 def micuenta(request):
-    return render(request, 'micuenta.html', {'user': request.user})  
+    user = request.user
+    try:
+        user_profile = user.userprofile
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            # Actualizar User model
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.is_staff = form.cleaned_data['is_staff']
+            user.save()
+
+            # Actualizar UserProfile model
+            user_profile.full_name = form.cleaned_data['full_name']
+            user_profile.phone = form.cleaned_data['phone']
+            user_profile.website = form.cleaned_data['website']
+            user_profile.street = form.cleaned_data['street']
+            user_profile.city = form.cleaned_data['city']
+            user_profile.state = form.cleaned_data['state']
+            user_profile.zip_code = form.cleaned_data['zip_code']
+            user_profile.save()
+
+            messages.success(request, 'Perfil actualizado correctamente.')
+            return redirect('micuenta')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+            print(form.errors)  # POR SI HAY ERORRES, AQUÍ SE IMPRIMIRAN (EN LA CONSOLA/SHELL)
+    else:
+        form = UserProfileForm(instance=user_profile, initial={
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'is_staff': user.is_staff,
+        })
+
+    return render(request, 'micuenta.html', {'form': form, 'user': user})
 
 def ver_carrito(request):
     carrito = request.session.get('carrito', {})
     return render(request, 'carrito.html', {'carrito': carrito})
 
 
+# No eliminar,,, grasias owo
+@login_required
+def editar_perfil(request):
+    user = request.user
+    try:
+        user_profile = user.userprofile
+    except UserProfile.DoesNotExist:
+        user_profile = UserProfile(user=user)
 
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            # Actualizar User model
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.is_staff = form.cleaned_data['is_staff']
+            user.save()
 
+            # Actualizar UserProfile model
+            user_profile.full_name = form.cleaned_data['full_name']
+            user_profile.phone = form.cleaned_data['phone']
+            user_profile.website = form.cleaned_data['website']
+            user_profile.street = form.cleaned_data['street']
+            user_profile.city = form.cleaned_data['city']
+            user_profile.state = form.cleaned_data['state']
+            user_profile.zip_code = form.cleaned_data['zip_code']
+            user_profile.save()
 
+            messages.success(request, 'Perfil actualizado correctamente.')
+            return redirect('micuenta')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+            print(form.errors)  # Imprime errores de formulario para depuración
+    else:
+        form = UserProfileForm(instance=user_profile, initial={
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'is_staff': user.is_staff,
+        })
 
-
+    return render(request, 'micuenta.html', {'form': form})
