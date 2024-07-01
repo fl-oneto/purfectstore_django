@@ -20,3 +20,22 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+
+
+
+
+
+class UserProfile(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    website = models.URLField(blank=True, null=True)
+    street = models.CharField(max_length=100)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    zip_code = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.full_name

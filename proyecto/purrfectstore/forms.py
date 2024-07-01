@@ -5,6 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 
+
+
+
+
+
+
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label='Usuario', required=True,
                                 max_length=50, min_length=5,
@@ -74,3 +80,8 @@ class FormularioContacto(forms.Form):
         if not telefono.isdigit():
             raise forms.ValidationError('El número de teléfono debe contener solo dígitos.')
         return telefono
+
+
+
+
+

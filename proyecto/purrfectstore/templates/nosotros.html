@@ -1,53 +1,35 @@
 {% extends 'index.html' %}
-{% load static %}
 
 {% block content %}
-<section class="nosotros">
+
+<main class="container mt-5">
+  <h2 class="mb-4">Mi Perfil</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="row">
-      <div class="bg-body-tertiary texto2 col-lg-6 px-4"> 
-        <!-- columna de texto -->
-        <h3 class="text-center">Sobre Nosotros</h3>
-        <p class="lh-lg">¡Bienvenido a PurrfectStore, tu paraíso felino en línea donde los sueños de tu gato se hacen realidad! En PurrfectStore, entendemos la importancia de consentir a tu compañero felino, porque sabemos que los gatos merecen lo mejor. Desde que abrimos nuestras puertas virtuales, nos hemos comprometido a ofrecer una amplia selección de productos de alta calidad que harán que tu gato ronronee de alegría. Ya sea que estés buscando juguetes divertidos para mantener a tu peludo amigo activo, camas acogedoras para sus largas siestas o deliciosas golosinas para satisfacer su paladar exigente, en PurrfectStore encontrarás todo lo que necesitas y más. Nuestro equipo está formado por amantes apasionados de los gatos que comparten tu devoción por estos majestuosos animales. Estamos aquí para brindarte una experiencia de compra excepcional, desde la navegación fácil de nuestra tienda en línea hasta nuestro servicio al cliente atento y dedicado. En PurrfectStore, no solo nos preocupamos por el bienestar de tu gato, sino que también nos esforzamos por marcar una diferencia en la comunidad felina más amplia. Colaboramos con organizaciones benéficas que trabajan incansablemente para ayudar a los gatos necesitados y estamos comprometidos a apoyar iniciativas que promuevan el cuidado responsable de los felinos. Gracias por elegir PurrfectStore como tu destino para mimar a tu gato. Estamos emocionados de formar parte de tu viaje junto a tu peludo amigo y esperamos ayudarte a hacer de cada día una experiencia verdaderamente purrfecta.</p>
-        <h4 class="text-center">Misión, Visión y Valores</h4>
-        <p class="lh-lg"><strong>Misión: </strong>En PurrfectStore, nuestra misión es proporcionar a los amantes de los gatos productos de alta calidad que satisfagan las necesidades y deseos de sus felinos compañeros. Nos esforzamos por ofrecer una experiencia de compra excepcional y un servicio al cliente dedicado, mientras promovemos el bienestar y la felicidad de los gatos en todo lo que hacemos. Estamos comprometidos a ser el destino preferido de los amantes de los gatos, donde encuentran todo lo necesario para consentir a sus peludos amigos.
-          <br><br><strong>Visión: </strong>Nuestra visión en PurrfectStore es convertirnos en un referente mundial en el cuidado y la satisfacción de las necesidades de los gatos y sus dueños. Nos esforzamos por ser reconocidos por nuestra amplia selección de productos de alta calidad, nuestra dedicación al servicio al cliente y nuestra contribución positiva a la comunidad felina. Aspiramos a ser una marca que inspire amor, cuidado y respeto hacia los gatos en todo el mundo.
-          <br><br><strong>Valores: </strong>En PurrfectStore, nuestra pasión por los gatos impulsa cada aspecto de nuestro trabajo. Nos comprometemos a ofrecer productos de la más alta calidad, respaldados por un servicio al cliente excepcional y una cultura de integridad y transparencia. Además, nos esforzamos por ser socialmente responsables, apoyando iniciativas que promuevan el bienestar felino, y buscamos continuamente innovar para satisfacer las necesidades cambiantes de nuestros clientes y sus adorables compañeros peludos.
-        </p>      
+      <div class="col-md-6 mb-3">
+        <label for="first_name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
       </div>
-      <div class="col-lg-6 texto2 text-center">
-        <h3>Nuestros Gatitos</h3>
-        <div>
-          <section class="carousel" >
-            <div class="row justify-content-center">
-                <div class="col-bg-6">
-                    <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner" id="imagenes-nosotros">
-                      <div class="carousel-item active" id="carrusel-gato1">
-                        <!-- img -->
-                      </div>
-                      <div class="carousel-item" id="carrusel-gato2">
-                        <!-- img -->
-                      </div>
-                      <div class="carousel-item" id="carrusel-gato3">
-                        <!-- img -->
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                    </div>
-                 </div>
-                 <!-- termino carrusel -->
-            </div>
-        </section>
-        </div>
+      <div class="col-md-6 mb-3">
+        <label for="last_name" class="form-label">Apellido</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
       </div>
     </div>
-  </section>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Deja este campo en blanco para mantener la contraseña actual">
+    </div>
+    <div class="mb-3">
+      <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+      <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Deja este campo en blanco para mantener la contraseña actual">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</main>
 
 {% endblock %}

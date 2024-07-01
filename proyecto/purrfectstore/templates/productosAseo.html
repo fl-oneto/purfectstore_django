@@ -19,9 +19,12 @@
                         <h5 class="card-title nombre-producto">{{ producto.nombre }}</h5>
                         <p class="card-text">{{ producto.descripcion }}</p>
                         <h5 class="precio">Precio: ${{ producto.precio|intcomma }}</h5>
-                        <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Comprar
-                        </button>
+                        <form action="{% url 'agregar_al_carrito' producto.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary mt-auto">
+                                Comprar
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

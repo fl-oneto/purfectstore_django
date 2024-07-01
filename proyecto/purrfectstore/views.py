@@ -5,6 +5,8 @@ from django.contrib import messages
 from .models import Producto, Categoria
 
 
+
+
 # Create your views here
 
 
@@ -12,25 +14,22 @@ def home(request):
     
     return render(request, 'landing.html')
 
-def carrito(request):
-    
-    return render(request, 'carrito.html')
 
 def contacto(request):
-    
-    return render(request, 'contacto.html')
+    success = False
+    form = FormularioContacto()
+    if request.method == 'POST':
+        form = FormularioContacto(request.POST)
+        if form.is_valid():
+            success = True
+            form = None
+            return render(request, 'contacto.html', {'form': form, 'success': success})
+    return render(request, 'contacto.html', {'form': form, 'success': success})
 
 def nosotros(request):
     
     return render(request, 'nosotros.html')
 
-def productosAseo(request):
-    
-    return render(request, 'productosAseo.html')
-
-def micuenta(request):
-    
-    return render(request, 'micuenta.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -61,21 +60,36 @@ def productosAseo(request):
     print(productos)
     return render(request, 'productosAseo.html', {'productos': productos, 'categoria': categoria_aseo})
 
-def contacto(request):
-    if request.method == 'POST':
-        form = FormularioContacto(request.POST)
-        if form.is_valid():
-            nombre = form.cleaned_data['nombre']
-            email = form.cleaned_data['email']
-            telefono = form.cleaned_data['telefono']
-            mensaje = form.cleaned_data['mensaje']
 
-            # Aquí puedes procesar los datos como necesites (guardar en la base de datos, enviar por correo, etc.)
-
-            # Redirigir a una página de éxito o mostrar un mensaje de éxito
-            return render(request, 'success.html', {'nombre': nombre, 'email': email, 'telefono': telefono, 'mensaje': mensaje})
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    if 'carrito' not in request.session:
+        request.session['carrito'] = {}
+    carrito = request.session['carrito']
+    if producto_id in carrito:
+        carrito[producto_id]['cantidad'] += 1
     else:
-        form = FormularioContacto()
+        print("Producto imagen URL:", producto.imagen.url)
+        carrito[producto_id] = {
+            'id': producto.id,
+            'imagen': producto.imagen.url,
+            'nombre': producto.nombre,
+            'precio': producto.precio,
+            'cantidad': 1,
+        }
+    request.session.modified = True  
+    return redirect('productosAseo')
 
-    # Renderizar el formulario inicialmente o en caso de errores
-    return render(request, 'contacto.html', {'form': form})
+def micuenta(request):
+    return render(request, 'micuenta.html', {'user': request.user})  
+
+def ver_carrito(request):
+    carrito = request.session.get('carrito', {})
+    return render(request, 'carrito.html', {'carrito': carrito})
+
+
+
+
+
+
+

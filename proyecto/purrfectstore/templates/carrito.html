@@ -1,2 +1,97 @@
 {% extends 'index.html' %}
 {% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+<section class="carrito"> 
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- Columna para la tabla -->
+        <div class="col-lg-8"> <!-- columna articulos-->
+          <h2>Carrito de Compras</h2>
+          <table class="table">
+            <thead>      
+                <tr>        
+                    <th scope="col">Producto</th>        
+                    <th class="d-none d-sm-table-cell">Cantidad</th>        
+                    <th scope="col">Precio Unitario</th>        
+                    <th scope="col">Subtotal</th>        
+                    <th class="d-none d-sm-table-cell">Eliminar</th>        
+                </tr>        
+            </thead>        
+            <tbody>        
+                {% for producto_id, item in carrito.items %}        
+                <tr>                  
+                  <td>
+                    <img src="{{ MEDIA_URL }}{{ item.imagen }}" alt="{{ item.nombre }}" width="50" height="50">
+                    {{ item.nombre }}
+                    </td>       
+                  <td class="d-none d-sm-table-cell">{{ item.cantidad }}</td>        
+                  <td>${{ item.precio|intcomma }}</td>        
+                  <td>${{ item.precio }}</td>        
+                  <td class="d-none d-sm-table-cell"><a href="#">Eliminar</a></td>        
+                </tr>        
+                {% empty %}        
+                <tr>        
+                    <td colspan="5">El carrito está vacío.</td>        
+                </tr>        
+                {% endfor %}        
+            </tbody>        
+        </table>
+        </div>
+        <!-- Columna para el resumen -->
+        <div class="col-md-3 bg-body-tertiary"> <!-- columna resumen info-->
+          <div class="p-3">
+            <h4>Costo Estimado De Envío</h4>
+            Región
+            <select class="form-select" aria-label="Region">
+              <option selected>Seleccione su Región</option>
+              <option value="1">Arica y Parinacota</option>
+              <option value="2">Tarapacá</option>
+              <option value="3">Atacama</option>
+              <option value="3">Coquimbo</option>
+              <option value="3">Valparaíso</option>
+              <option value="3">Santiago</option>
+              <option value="3">Libertador General Bernardo O'Higgins</option>
+              <option value="3">Maule</option>
+              <option value="3">Ñuble</option>
+              <option value="3">Biobío</option>
+              <option value="3">La Araucanía</option>
+              <option value="3">Los Ríos</option>
+              <option value="3">Los Lagos</option>
+              <option value="3">Aysén del General Carlos Ibáñez del Campo</option>
+              <option value="3">Magallanes</option>
+              <option value="3">Los Lagos</option>
+              
+            </select>
+          </div>
+          <div class="p-3">
+            Comuna <br>
+            <select class="form-select" aria-label="Comuna">
+              <option selected>Seleccione su Comuna</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="p-3">
+            <button type="button" class="btn btn-secondary w-100">Calcular Envío</button>
+          </div>
+          <div class="p-3">
+            <h4 class="text-center"> Total a Pagar:</h4>
+            
+            <h5 class="precios">$30.000</h5>
+           
+          </div>
+          <div class="p-3">
+            <button type="button" class="btn btn-primary w-100">Pagar</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
