@@ -85,9 +85,47 @@ class FormularioContacto(forms.Form):
 # REVISAR LA VISTA (purrfectstore/views.py) PARA EL MANEJO DE ACTUALIZACIÓN DE LOS DATOS DEL PERFIL DE USUARIO.
 
 class UserProfileForm(forms.ModelForm):
+    email = forms.EmailField(label='Correo Electrónico', required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = UserProfile
+        fields = ['full_name', 'phone', 'website', 'street', 'city', 'state', 'zip_code']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'website': forms.URLInput(attrs={'class': 'form-control'}),
+            'street': forms.TextInput(attrs={'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'class': 'form-control'}),
+            'state': forms.TextInput(attrs={'class': 'form-control'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'full_name': 'Nombre Completo',
+            'phone': 'Teléfono',
+            'website': 'Sitio Web',
+            'street': 'Calle',
+            'city': 'Ciudad',
+            'state': 'Región',
+            'zip_code': 'Código Postal',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.user:
+            self.fields['email'].initial = self.instance.user.email
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.user.pk).exists():
+            raise forms.ValidationError('Este correo electrónico ya está en uso.')
+        return email
+
+
+'''
+class UserProfileForm(forms.ModelForm):
     username = forms.CharField(label='Nombre de Usuario', max_length=150, required=True,
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(label='Correo Electrónico', required=True,
+    email = forms.EmailField(label='Correo Electrónico', required=False,
                              widget=forms.EmailInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='Nombre', max_length=30, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -98,9 +136,8 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['full_name', 'phone', 'website', 'street', 'city', 'state', 'zip_code']
+        fields = ['phone', 'website', 'street', 'city', 'state', 'zip_code']
         widgets = {
-            'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'website': forms.URLInput(attrs={'class': 'form-control'}),
             'street': forms.TextInput(attrs={'class': 'form-control'}),
@@ -117,3 +154,5 @@ class UserProfileForm(forms.ModelForm):
             self.fields['first_name'].initial = self.instance.user.first_name
             self.fields['last_name'].initial = self.instance.user.last_name
             self.fields['is_staff'].initial = self.instance.user.is_staff
+
+'''

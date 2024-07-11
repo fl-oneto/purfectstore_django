@@ -95,39 +95,42 @@ def micuenta(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
-            # Actualizar User model
-            user.username = form.cleaned_data['username']
-            user.email = form.cleaned_data['email']
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.is_staff = form.cleaned_data['is_staff']
-            user.save()
+            # Verificar si el correo ya existe en la base de datos
+            email = form.cleaned_data['email']
+            if User.objects.filter(email=email).exclude(pk=user.pk).exists():
+                form.add_error('email', 'Este correo electrónico ya está en uso.')
+            else:
+                # Actualizar User model
+                user.email = email
+                user.save()
 
-            # Actualizar UserProfile model
-            user_profile.full_name = form.cleaned_data['full_name']
-            user_profile.phone = form.cleaned_data['phone']
-            user_profile.website = form.cleaned_data['website']
-            user_profile.street = form.cleaned_data['street']
-            user_profile.city = form.cleaned_data['city']
-            user_profile.state = form.cleaned_data['state']
-            user_profile.zip_code = form.cleaned_data['zip_code']
-            user_profile.save()
+                # Actualizar UserProfile model
+                user_profile.full_name = form.cleaned_data['full_name']
+                user_profile.phone = form.cleaned_data['phone']
+                user_profile.website = form.cleaned_data['website']
+                user_profile.street = form.cleaned_data['street']
+                user_profile.city = form.cleaned_data['city']
+                user_profile.state = form.cleaned_data['state']
+                user_profile.zip_code = form.cleaned_data['zip_code']
+                user_profile.save()
 
-            messages.success(request, 'Perfil actualizado correctamente.')
-            return redirect('micuenta')
+                messages.success(request, 'Perfil actualizado correctamente.')
+                return redirect('micuenta')
         else:
             messages.error(request, 'Por favor, corrija los errores en el formulario.')
-            print(form.errors)  # POR SI HAY ERORRES, AQUÍ SE IMPRIMIRAN (EN LA CONSOLA/SHELL)
+            print("Formulario no válido")
+            print(form.errors)  # Para depuración
     else:
-        form = UserProfileForm(instance=user_profile, initial={
-            'username': user.username,
-            'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'is_staff': user.is_staff,
-        })
+        form = UserProfileForm(instance=user_profile)
 
     return render(request, 'micuenta.html', {'form': form, 'user': user})
+
+
+
+
+
+
+
 
 def ver_carrito(request):
     carrito = request.session.get('carrito', {})
@@ -135,6 +138,7 @@ def ver_carrito(request):
 
 
 # No eliminar,,, grasias owo
+'''
 @login_required
 def editar_perfil(request):
     user = request.user
@@ -178,7 +182,8 @@ def editar_perfil(request):
             'is_staff': user.is_staff,
         })
 
-    return render(request, 'micuenta.html', {'form': form})
+    return render(request, 'micuenta.html', {'form': form}) '''
+
 
 def obt_img_gato(request):
     if 'cat_images' in request.session:

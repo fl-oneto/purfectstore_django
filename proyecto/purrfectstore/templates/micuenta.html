@@ -12,7 +12,7 @@
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="User Avatar">
                             </div>
                             <h5 class="user-name" id="user-name">{{ form.full_name.value|default:"Nombre Usuario" }}</h5>
-                            <h6 class="user-email">{{ form.email.value|default:"user@example.com" }}</h6>
+                            <h6 class="user-email">{{ user.email }}</h6>
                         </div>
                     </div>
                 </div>
@@ -21,63 +21,71 @@
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
+                    {% if messages %}
+                        <div>
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <form method="POST" action="">
                         {% csrf_token %}
+                        {{ form.non_field_errors }}
                         <div class="row gutters">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <h6 class="mb-2 text-primary">Información</h6>
-                            </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_full_name">Nombre Completo</label>
-                                    <input type="text" class="form-control" id="id_full_name" name="full_name" value="{{ form.full_name.value }}">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="id_email">Email</label>
-                                    <input type="email" class="form-control" id="id_email" name="email" value="{{ form.email.value }}">
+                                    {{ form.full_name }}
+                                    {{ form.full_name.errors }}
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_phone">Teléfono</label>
-                                    <input type="text" class="form-control" id="id_phone" name="phone" value="{{ form.phone.value }}">
+                                    {{ form.phone }}
+                                    {{ form.phone.errors }}
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="id_website">Website</label>
-                                    <input type="url" class="form-control" id="id_website" name="website" value="{{ form.website.value }}">
+                                    <label for="id_website">Sitio Web</label>
+                                    {{ form.website }}
+                                    {{ form.website.errors }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row gutters">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <h6 class="mt-3 mb-2 text-primary">Dirección</h6>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_street">Calle</label>
-                                    <input type="text" class="form-control" id="id_street" name="street" value="{{ form.street.value }}">
+                                    {{ form.street }}
+                                    {{ form.street.errors }}
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_city">Ciudad</label>
-                                    <input type="text" class="form-control" id="id_city" name="city" value="{{ form.city.value }}">
+                                    {{ form.city }}
+                                    {{ form.city.errors }}
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_state">Región</label>
-                                    <input type="text" class="form-control" id="id_state" name="state" value="{{ form.state.value }}">
+                                    {{ form.state }}
+                                    {{ form.state.errors }}
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="id_zip_code">Código Postal</label>
-                                    <input type="text" class="form-control" id="id_zip_code" name="zip_code" value="{{ form.zip_code.value }}">
+                                    {{ form.zip_code }}
+                                    {{ form.zip_code.errors }}
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="id_email">Correo Electrónico</label>
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
                                 </div>
                             </div>
                         </div>

@@ -13,6 +13,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('productosAseo/', views.productosAseo, name='productosAseo'),
     path('contacto/', views.contacto, name='contacto'),
-    path('micuenta/', views.editar_perfil, name='micuenta'), # NMO RETIRAR PLSPLS
+    #path('micuenta/', views.micuenta, name='micuenta'),
     path('agregar-al-carrito/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
 ]

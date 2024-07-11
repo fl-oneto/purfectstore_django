@@ -29,7 +29,7 @@ urlpatterns = [
     path('nosotros/', nosotros, name="nosotros"), 
     path('api/cat-images/', obt_img_gato, name='obt_img_gato'),
     path('productosAseo/', productosAseo, name="productosAseo"),
-    path('micuenta/', micuenta, name="micuenta"),  # NMO RETIRAR PLSPLS, esencial para el deploy 
+    path('micuenta/', micuenta, name="micuenta"),  # NO RETIRAR PLSPLS, esencial para el deploy 
 ]
 
 if settings.DEBUG:
