@@ -35,13 +35,13 @@ def nosotros(request):
     return render(request, 'nosotros.html')
 
 def productosCamas(request):
-    return render(request, 'productos_camas.html')
+    return render(request, 'productosCamas.html')
 
 def productosJuguetes(request):
-    return render(request, 'productos_juguetes.html')
+    return render(request, 'productosJuguetes.html')
 
 def productosRopa(request):
-    return render(request, 'productos_ropa.html')
+    return render(request, 'productosRopa.html')
 
 
 def signup(request):
