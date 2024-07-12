@@ -51,12 +51,16 @@ def custom_login(request):
         form = CustomAuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            print('login exitoso')
-            return redirect('home')
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'Credenciales inválidas, por favor intente de nuevo.')
+        else:
+            messages.error(request, 'Por favor corrija los errores en el formulario.')
     else:
         form = CustomAuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})  
+    return render(request, 'registration/login.html', {'form': form})
 
 def productosAseo(request):
     categoria_aseo = get_object_or_404(Categoria, nombre='Aseo e Higiene')
