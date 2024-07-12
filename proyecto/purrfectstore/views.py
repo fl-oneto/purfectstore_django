@@ -34,6 +34,15 @@ def nosotros(request):
     
     return render(request, 'nosotros.html')
 
+def productosCamas(request):
+    return render(request, 'productos_camas.html')
+
+def productosJuguetes(request):
+    return render(request, 'productos_juguetes.html')
+
+def productosRopa(request):
+    return render(request, 'productos_ropa.html')
+
 
 def signup(request):
     if request.method == 'POST':

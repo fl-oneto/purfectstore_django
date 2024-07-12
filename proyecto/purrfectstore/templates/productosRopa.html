@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<section class="imagenes bg-body-secondary">
+    <h2>Ropa y Accesorios</h2><br>
+    <div class="row">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
+            <div class="card card-hover">
+                <img src="{% static 'img/ropa.avif' %}" class="card-img-top" alt="ropa">
+                <div class="card-body">
+                    <h5 class="card-title">Sombrero de Paja para Gatos</h5>
+                    <p class="card-text">Desde elegantes collares hasta divertidos sombreros, encuentra el toque final perfecto para el look de tu gato en nuestra colección de ropa y accesorios.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Comprar
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Sombrero de paja para Gato</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Producto añadido con éxito.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
+                                    <a href="{% url 'carrito' %}" class="btn btn-primary">Ir a Pagar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Agregar más productos de manera similar -->
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<section class="imagenes bg-body-secondary">
+    <h2>Juguetes</h2><br>
+    <div class="row">
+        <div class="col-6 col-md-3 mb-3 mb-md-0">
+            <div class="card card-hover">
+                <img src="{% static 'img/juguete.webp' %}" class="card-img-top" alt="juguete">
+                <div class="card-body">
+                    <h5 class="card-title">Manos para Gato</h5>
+                    <p class="card-text">Explora nuestra colección de juguetes para gatos, creados para inspirar la curiosidad y mantener activo a tu felino amigo.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Comprar
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Manos para Gato</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Producto añadido con éxito.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
+                                    <a href="{% url 'carrito' %}" class="btn btn-primary">Ir a Pagar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Agregar más productos de manera similar -->
+    </div>
+</section>
+
+
+{% endblock %}
