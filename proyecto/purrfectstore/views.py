@@ -134,7 +134,8 @@ def micuenta(request):
 
 def ver_carrito(request):
     carrito = request.session.get('carrito', {})
-    return render(request, 'carrito.html', {'carrito': carrito})
+    total_precio = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    return render(request, 'carrito.html', {'carrito': carrito, 'total_precio': total_precio})
 
 
 # No eliminar,,, grasias owo
